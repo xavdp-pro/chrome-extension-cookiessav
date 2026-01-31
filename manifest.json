@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Cookie Saver (No Analytics)",
   "version": "1.0.0",
-  "description": "Sauvegarde les cookies auth et préférences en JSON, exclut analytics",
+  "description": "Save authentication and preference cookies to JSON, excludes analytics cookies",
   "permissions": ["cookies", "tabs", "activeTab"],
   "host_permissions": ["<all_urls>"],
   "action": {
