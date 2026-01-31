@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cookie Saver - Sélection</title>
+  <title>Cookie Saver - Cookie selection</title>
   <link rel="stylesheet" href="cookies.css">
 </head>
 <body>
   <div class="container">
     <header class="header">
       <h1>Cookie Saver</h1>
-      <p class="subtitle">Sélectionnez les cookies à sauvegarder</p>
-      <div class="site-info"><span id="current-site">Chargement...</span></div>
+      <p class="subtitle">Select the cookies to save</p>
+      <div class="site-info"><span id="current-site">Loading...</span></div>
     </header>
     <div class="controls">
       <div class="control-group">
-        <button id="select-all" class="btn btn-secondary">Tout sélectionner</button>
-        <button id="deselect-all" class="btn btn-secondary">Tout désélectionner</button>
-        <input type="text" id="search-cookies" placeholder="Rechercher..." class="search-input">
+        <button id="select-all" class="btn btn-secondary">Select all</button>
+        <button id="deselect-all" class="btn btn-secondary">Deselect all</button>
+        <input type="text" id="search-cookies" placeholder="Search cookies..." class="search-input">
       </div>
       <div class="stats-bar">
-        <span class="stat">Cookies: <strong id="total-cookies">0</strong></span>
-        <span class="stat">Sélectionnés: <strong id="selected-count">0</strong></span>
+        <span class="stat">Cookies found: <strong id="total-cookies">0</strong></span>
+        <span class="stat">Selected: <strong id="selected-count">0</strong></span>
       </div>
     </div>
-    <div id="cookie-list" class="cookie-list"><div class="loading">Chargement...</div></div>
+    <div id="cookie-list" class="cookie-list"><div class="loading">Loading cookies...</div></div>
     <footer class="footer">
-      <button id="save-btn" class="btn btn-primary" disabled>Sauvegarder (<span id="save-count">0</span>)</button>
+      <button id="save-btn" class="btn btn-primary" disabled>Save (<span id="save-count">0</span>)</button>
       <div id="status" class="status"></div>
     </footer>
   </div>
