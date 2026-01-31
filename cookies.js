@@ -63,11 +63,11 @@ function renderCookieList(filter = '') {
   list.innerHTML = filtered.map(c => {
     const sel = selectedCookies.has(c.name);
     const val = c.value.length > 100 ? c.value.substring(0, 100) + '...' : c.value;
-    return `<div class="cookie-item ${sel ? 'selected' : ''}"><input type="checkbox" class="cookie-checkbox" data-name="${c.name}" ${sel ? 'checked' : ''}><div class="cookie-info"><div class="cookie-name">${escapeHtml(c.name)}</div><div class="cookie-details"><span class="cookie-detail">Domain: ${escapeHtml(c.domain)}</span><span class="cookie-detail">Path: ${escapeHtml(c.path)}</span>${c.secure ? '<span class="cookie-detail">Secure</span>' : ''}${c.httpOnly ? '<span class="cookie-detail">HttpOnly</span>' : ''}</div><div class="cookie-value">${escapeHtml(val)}</div></div></div>`;
+    return `<div class="cookie-item ${sel ? 'selected' : ''}" data-cookie-name="${c.name}"><input type="checkbox" class="cookie-checkbox" data-cookie-name="${c.name}" ${sel ? 'checked' : ''}><div class="cookie-info"><div class="cookie-name">${escapeHtml(c.name)}</div><div class="cookie-details"><span class="cookie-detail">Domain: ${escapeHtml(c.domain)}</span><span class="cookie-detail">Path: ${escapeHtml(c.path)}</span>${c.secure ? '<span class="cookie-detail">Secure</span>' : ''}${c.httpOnly ? '<span class="cookie-detail">HttpOnly</span>' : ''}${c.sameSite ? '<span class="cookie-detail">SameSite: ' + c.sameSite + '</span>' : ''}</div><div class="cookie-value">${escapeHtml(val)}</div></div></div>`;
   }).join('');
   list.querySelectorAll('.cookie-checkbox').forEach(cb => {
     cb.addEventListener('change', e => {
-      const n = e.target.dataset.name;
+      const n = e.target.dataset.cookieName;
       if (e.target.checked) selectedCookies.add(n); else selectedCookies.delete(n);
       e.target.closest('.cookie-item').classList.toggle('selected', e.target.checked);
       updateSelectionCount();
