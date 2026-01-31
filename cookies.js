@@ -19,11 +19,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('current-site').textContent = url.hostname;
         await loadCookies();
       } else {
-        showStatus('Impossible de détecter le site actuel', 'error');
+        showStatus('Cannot detect current site. Go to a site and try again.', 'error');
       }
     }
   } catch (error) {
-    showStatus('Erreur initialisation', 'error');
+    showStatus('Initialization error', 'error');
   }
   document.getElementById('select-all').addEventListener('click', selectAll);
   document.getElementById('deselect-all').addEventListener('click', deselectAll);
@@ -50,13 +50,13 @@ function renderCookieList(filter = '') {
   const list = document.getElementById('cookie-list');
   const term = filter.toLowerCase();
   if (allCookies.length === 0) {
-    list.innerHTML = '<div class="empty-state">Aucun cookie trouvé</div>';
+    list.innerHTML = '<div class="empty-state">No cookies found for this site</div>';
     updateSelectionCount();
     return;
   }
   const filtered = allCookies.filter(c => !term || c.name.toLowerCase().includes(term) || c.value.toLowerCase().includes(term) || c.domain.toLowerCase().includes(term));
   if (filtered.length === 0) {
-    list.innerHTML = '<div class="empty-state">Aucun résultat</div>';
+    list.innerHTML = '<div class="empty-state">No cookies match the search</div>';
     updateSelectionCount();
     return;
   }
@@ -87,11 +87,11 @@ function updateSelectionCount() {
 }
 
 async function saveSelectedCookies() {
-  if (selectedCookies.size === 0) { showStatus('Aucun cookie sélectionné', 'error'); return; }
+  if (selectedCookies.size === 0) { showStatus('No cookies selected', 'error'); return; }
   const toSave = allCookies.filter(c => selectedCookies.has(c.name));
   const data = { site: currentTab.url, domain: new URL(currentTab.url).hostname, exportDate: new Date().toISOString(), cookieCount: toSave.length, cookies: toSave.map(c => ({ name: c.name, value: c.value, domain: c.domain, path: c.path, secure: c.secure, httpOnly: c.httpOnly, sameSite: c.sameSite, expirationDate: c.expirationDate })) };
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })); a.download = `cookies_${new URL(currentTab.url).hostname}_${Date.now()}.json`; a.click(); URL.revokeObjectURL(a.href);
-  showStatus(`✅ ${toSave.length} cookie(s) sauvegardé(s)!`, 'success');
+  showStatus(`✅ ${toSave.length} cookie(s) saved successfully!`, 'success');
 }
 function showStatus(msg, type) { const s = document.getElementById('status'); s.textContent = msg; s.className = `status ${type}`; if (type === 'success') setTimeout(() => { s.className = 'status'; s.textContent = ''; }, 5000); }
 function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
