@@ -8,30 +8,33 @@
 </head>
 <body>
   <div class="container">
-    <h1>Cookie Saver</h1>
+    <h1>🍪 Cookie Saver</h1>
     <p class="subtitle">Sauvegarde les cookies essentiels (sans analytics)</p>
     <div class="info-box"><p id="current-site">Chargement...</p></div>
     <div class="stats" id="stats" style="display: none;">
       <div class="stat-item"><span class="stat-label">Cookies trouvés:</span><span class="stat-value" id="total-cookies">0</span></div>
     </div>
-    <button id="select-btn" class="btn-primary">Sélectionner les cookies</button>
+    <button id="select-btn" class="btn-primary">📋 Sélectionner les cookies</button>
     <div id="status" class="status"></div>
+    <div class="footer"><small>Choisissez les cookies à sauvegarder</small></div>
   </div>
   <div id="cookie-modal" class="modal">
     <div class="modal-content">
-      <div class="modal-header"><h2>Sélectionner les cookies</h2><button class="close-btn" id="close-modal">&times;</button></div>
+      <div class="modal-header"><h2>🍪 Sélectionner les cookies</h2><button class="close-btn" id="close-modal">&times;</button></div>
       <div class="modal-body">
         <div class="modal-controls">
           <button id="select-all" class="btn-small">Tout sélectionner</button>
           <button id="deselect-all" class="btn-small">Tout désélectionner</button>
-          <input type="text" id="search-cookies" placeholder="Rechercher un cookie..." class="search-input">
+          <input type="text" id="search-cookies" placeholder="🔍 Rechercher un cookie..." class="search-input">
         </div>
-        <div id="cookie-list" class="cookie-list"><div class="loading">Chargement...</div></div>
+        <div id="cookie-list" class="cookie-list"><div class="loading">Chargement des cookies...</div></div>
       </div>
       <div class="modal-footer">
-        <span id="selected-count">0</span> cookie(s) sélectionné(s)
-        <button id="cancel-btn" class="btn-secondary">Annuler</button>
-        <button id="save-selected-btn" class="btn-primary" disabled>Sauvegarder (<span id="save-count">0</span>)</button>
+        <div class="selection-count"><span id="selected-count">0</span> cookie(s) sélectionné(s)</div>
+        <div class="modal-buttons">
+          <button id="cancel-btn" class="btn-secondary">Annuler</button>
+          <button id="save-selected-btn" class="btn-primary" disabled>💾 Sauvegarder (<span id="save-count">0</span>)</button>
+        </div>
       </div>
     </div>
   </div>
