@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('current-site').textContent = url.hostname;
       await loadCookies();
     } else {
-      showStatus('Impossible de détecter le site actuel', 'error');
+      showStatus('Cannot detect current site', 'error');
     }
   } catch (error) {
-    showStatus('Erreur lors de l\'initialisation', 'error');
+    showStatus('Initialization error', 'error');
   }
   document.getElementById('select-btn').addEventListener('click', openCookiesPage);
   document.getElementById('close-modal').addEventListener('click', closeModal);
@@ -56,24 +56,24 @@ function closeModal() {
 }
 
 function renderCookieList(filter = '') {
-  const cookieList = document.getElementById('cookie-list');
-  const searchTerm = filter.toLowerCase();
+  const list = document.getElementById('cookie-list');
+  const term = filter.toLowerCase();
   if (allCookies.length === 0) {
-    cookieList.innerHTML = '<div class="empty-state">Aucun cookie trouvé</div>';
+    list.innerHTML = '<div class="empty-state">No cookies found for this site</div>';
     return;
   }
-  const filtered = allCookies.filter(c => !searchTerm || c.name.toLowerCase().includes(searchTerm) || c.value.toLowerCase().includes(searchTerm) || c.domain.toLowerCase().includes(searchTerm));
+  const filtered = allCookies.filter(c => !term || c.name.toLowerCase().includes(term) || c.value.toLowerCase().includes(term) || c.domain.toLowerCase().includes(term));
   if (filtered.length === 0) {
-    cookieList.innerHTML = '<div class="empty-state">Aucun cookie ne correspond</div>';
+    list.innerHTML = term ? '<div class="empty-state">No cookies match the search</div>' : '<div class="empty-state">No cookies to display</div>';
     return;
   }
-  cookieList.innerHTML = filtered.map(cookie => {
+  list.innerHTML = filtered.map(cookie => {
     const sel = selectedCookies.has(cookie.name);
     const val = cookie.value.length > 50 ? cookie.value.substring(0, 50) + '...' : cookie.value;
-    return `<div class="cookie-item ${sel ? 'selected' : ''}" data-cookie-name="${cookie.name}"><input type="checkbox" class="cookie-checkbox" data-cookie-name="${cookie.name}" ${sel ? 'checked' : ''}><div class="cookie-info"><div class="cookie-name">${escapeHtml(cookie.name)}</div><div class="cookie-details"><span class="cookie-detail">Domain: ${escapeHtml(cookie.domain)}</span><span class="cookie-detail">Path: ${escapeHtml(cookie.path)}</span>${cookie.secure ? '<span class="cookie-detail">Secure</span>' : ''}${cookie.httpOnly ? '<span class="cookie-detail">HttpOnly</span>' : ''}${cookie.sameSite ? `<span class="cookie-detail">SameSite: ${cookie.sameSite}</span>` : ''}</div><div class="cookie-value">${escapeHtml(val)}</div></div></div>`;
+    return `<div class="cookie-item ${sel ? 'selected' : ''}" data-cookie-name="${cookie.name}"><input type="checkbox" class="cookie-checkbox" data-cookie-name="${cookie.name}" ${sel ? 'checked' : ''}><div class="cookie-info"><div class="cookie-name">${escapeHtml(cookie.name)}</div><div class="cookie-details"><span class="cookie-detail">Domain: ${escapeHtml(cookie.domain)}</span><span class="cookie-detail">Path: ${escapeHtml(cookie.path)}</span>${cookie.secure ? '<span class="cookie-detail">Secure</span>' : ''}${cookie.httpOnly ? '<span class="cookie-detail">HttpOnly</span>' : ''}${cookie.sameSite ? '<span class="cookie-detail">SameSite: ' + cookie.sameSite + '</span>' : ''}</div><div class="cookie-value">${escapeHtml(val)}</div></div></div>`;
   }).join('');
-  cookieList.querySelectorAll('.cookie-checkbox').forEach(cb => {
-    cb.addEventListener('change', (e) => {
+  list.querySelectorAll('.cookie-checkbox').forEach(cb => {
+    cb.addEventListener('change', e => {
       const n = e.target.dataset.cookieName;
       if (e.target.checked) selectedCookies.add(n); else selectedCookies.delete(n);
       e.target.closest('.cookie-item').classList.toggle('selected', e.target.checked);
@@ -94,12 +94,12 @@ function updateSelectionCount() {
 }
 
 async function saveSelectedCookies() {
-  if (selectedCookies.size === 0) { showStatus('Aucun cookie sélectionné', 'error'); return; }
+  if (selectedCookies.size === 0) { showStatus('No cookies selected', 'error'); return; }
   const toSave = allCookies.filter(c => selectedCookies.has(c.name));
   const data = { site: currentTab.url, domain: new URL(currentTab.url).hostname, exportDate: new Date().toISOString(), cookieCount: toSave.length, cookies: toSave.map(c => ({ name: c.name, value: c.value, domain: c.domain, path: c.path, secure: c.secure, httpOnly: c.httpOnly, sameSite: c.sameSite, expirationDate: c.expirationDate })) };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `cookies_${new URL(currentTab.url).hostname}_${Date.now()}.json`; a.click(); URL.revokeObjectURL(a.href);
-  showStatus(`✅ ${toSave.length} cookie(s) sauvegardé(s)!`, 'success');
+  showStatus(`✅ ${toSave.length} cookie(s) saved successfully!`, 'success');
   closeModal();
 }
 function showStatus(msg, type) { const s = document.getElementById('status'); s.textContent = msg; s.className = `status ${type}`; if (type === 'success') setTimeout(() => { s.className = 'status'; s.textContent = ''; }, 3000); }
