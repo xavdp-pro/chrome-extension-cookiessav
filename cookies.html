@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Saver - Sélection</title>
+  <link rel="stylesheet" href="cookies.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Cookie Saver</h1>
+      <p class="subtitle">Sélectionnez les cookies à sauvegarder</p>
+      <div class="site-info"><span id="current-site">Chargement...</span></div>
+    </header>
+    <div class="controls">
+      <div class="control-group">
+        <button id="select-all" class="btn btn-secondary">Tout sélectionner</button>
+        <button id="deselect-all" class="btn btn-secondary">Tout désélectionner</button>
+        <input type="text" id="search-cookies" placeholder="Rechercher..." class="search-input">
+      </div>
+      <div class="stats-bar">
+        <span class="stat">Cookies: <strong id="total-cookies">0</strong></span>
+        <span class="stat">Sélectionnés: <strong id="selected-count">0</strong></span>
+      </div>
+    </div>
+    <div id="cookie-list" class="cookie-list"><div class="loading">Chargement...</div></div>
+    <footer class="footer">
+      <button id="save-btn" class="btn btn-primary" disabled>Sauvegarder (<span id="save-count">0</span>)</button>
+      <div id="status" class="status"></div>
+    </footer>
+  </div>
+  <script src="cookies.js"></script>
+</body>
+</html>
